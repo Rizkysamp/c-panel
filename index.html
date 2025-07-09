@@ -1,8 +1,9 @@
-<!DOCTYPE html><html lang="id">
+<!DOCTYPE html>
+<html lang="id">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>UNLI Bot WhatsApp • Pterodactyl Builder</title>
+  <title>Pembuatan Server Bot WhatsApp</title>
   <style>
     :root {
       --bg: #0f1117;
@@ -12,128 +13,91 @@
       --muted: #94a3b8;
       font-family: "Inter", sans-serif;
     }
-    *{box-sizing:border-box}
-    body{margin:0;padding:0;background:var(--bg);color:var(--text);display:flex;align-items:center;justify-content:center;min-height:100vh}
-    .card{background:var(--panel);border-radius:1rem;box-shadow:0 0 20px rgba(0,0,0,.45);padding:2rem 2.5rem;width:100%;max-width:560px;animation:fadeIn .8s forwards;opacity:0;transform:translateY(40px)}
-    @keyframes fadeIn{to{opacity:1;transform:translateY(0)}}
-    h1{text-align:center;margin-top:0;font-size:1.6rem}
-    label{display:block;margin-top:1.2rem;font-weight:600}
-    input{width:100%;padding:.6rem .8rem;margin-top:.4rem;border:1px solid var(--muted);border-radius:.5rem;background:transparent;color:var(--text)}
-    input::placeholder{color:var(--muted)}
-    button{margin-top:2rem;cursor:pointer;width:100%;background:var(--primary);color:#fff;border:none;padding:.8rem;font-size:1rem;border-radius:.5rem;font-weight:600;transition:background .2s}
-    button:hover{background:#ff5236}
-    button:disabled{background:#3b3b3b;cursor:not-allowed}
-    pre{margin-top:1.3rem;background:#13151c;padding:1rem;overflow-x:auto;border-radius:.5rem;max-height:350px}
-    .footer{margin-top:1rem;font-size:.85rem;color:var(--muted);text-align:center}
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; padding: 0;
+      background: var(--bg);
+      color: var(--text);
+      display: flex; align-items: center; justify-content: center;
+      min-height: 100vh;
+    }
+    .card {
+      background: var(--panel);
+      border-radius: 1rem;
+      box-shadow: 0 0 20px rgba(0,0,0,.45);
+      padding: 2rem 2.5rem;
+      width: 100%; max-width: 560px;
+      animation: fadeIn 0.8s ease forwards;
+      opacity: 0; transform: translateY(40px);
+    }
+    @keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
+    h1 { margin-top: 0; font-size: 1.6rem; text-align: center; }
+    label { display: block; margin-top: 1.2rem; font-weight: 600; }
+    input {
+      width: 100%; padding: 0.6rem 0.8rem; margin-top: 0.4rem;
+      border: 1px solid var(--muted); border-radius: 0.5rem;
+      background: transparent; color: var(--text);
+    }
+    input::placeholder { color: var(--muted); }
+    button {
+      margin-top: 2rem; cursor: pointer; width: 100%;
+      background: var(--primary);
+      color: #fff; border: none; padding: 0.8rem; font-size: 1rem;
+      border-radius: 0.5rem; font-weight: 600;
+      transition: background 0.2s;
+    }
+    button:hover { background: #ff5236; }
+    button:disabled { background: #3b3b3b; cursor: not-allowed; }
+    pre {
+      margin-top: 1.5rem; background: #13151c; padding: 1rem;
+      overflow-x: auto; border-radius: 0.5rem; max-height: 320px;
+    }
+    .footer { margin-top: 1rem; font-size: 0.85rem; color: var(--muted); text-align: center; }
   </style>
 </head>
 <body>
   <main class="card">
-    <h1>Buat Server UNLI – Egg Bot WhatsApp</h1>
+    <h1>Buat Server • Bot WhatsApp (Nest 5 / Egg 15)</h1>
     <form id="createForm">
       <label for="username">Username (≥4 karakter)</label>
       <input id="username" minlength="4" placeholder="contoh: botuser" required />
       <button id="submitBtn" type="submit">Buat Server Sekarang</button>
     </form>
     <pre id="output">&nbsp;</pre>
-    <div class="footer">Domain & API key telah ditanam langsung di skrip • Pastikan pajanan publik Anda aman!</div>
-  </main><script>
-const PANEL_URL   = "https://monzhost.apcb.biz.id";
-const API_KEY     = "ptla_o8FUMSQDHSxNkNIstvk3WGt56u7xAq4zC20sQRuJ0Mr";
-const NEST_ID     = 5;
-const EGG_ID      = 15;
-const LOCATION_ID = 1;
+    <div class="footer">Powered by Vercel &amp; Pterodactyl • Token disimpan aman di serverless function</div>
+  </main>
 
-const form      = document.getElementById('createForm');
-const output    = document.getElementById('output');
+<script>
+const form = document.getElementById('createForm');
+const output = document.getElementById('output');
 const submitBtn = document.getElementById('submitBtn');
 
-function genPassword(username){
-  return username + Math.random().toString(16).slice(2,6);
-}
-
-form.addEventListener('submit', async (e)=>{
+form.addEventListener('submit', async (e) => {
   e.preventDefault();
+  const username = document.getElementById('username').value.trim().toLowerCase();
+  if (username.length < 4) {
+    output.textContent = '❌ Username minimal 4 karakter!';
+    return;
+  }
   output.textContent = '⏳ Memproses…';
   submitBtn.disabled = true;
 
-  const username = document.getElementById('username').value.trim().toLowerCase();
-  if(username.length < 4){ output.textContent = '❌ Username minimal 4 karakter!'; submitBtn.disabled=false; return; }
-
-  const email    = username + '@gmail.com';
-  const name     = username.charAt(0).toUpperCase() + username.slice(1) + ' Server';
-  const password = genPassword(username);
-
-  try{
-    const userRes = await fetch(`${PANEL_URL}/api/application/users`,{
-      method:'POST',
-      headers:{
-        'Accept':'application/json',
-        'Content-Type':'application/json',
-        'Authorization':`Bearer ${API_KEY}`
-      },
-      body:JSON.stringify({
-        email,
-        username,
-        first_name:name,
-        last_name:'Server',
-        language:'en',
-        password
-      })
+  try {
+    const res = await fetch('/api/create-server', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username })
     });
-    const userJson = await userRes.json();
-    if(!userRes.ok) throw userJson;
-    const userId = userJson.attributes.id;
+    const json = await res.json();
+    if (!res.ok) throw json;
 
-    const eggRes = await fetch(`${PANEL_URL}/api/application/nests/${NEST_ID}/eggs/${EGG_ID}`,{
-      method:'GET',
-      headers:{
-        'Accept':'application/json',
-        'Content-Type':'application/json',
-        'Authorization':`Bearer ${API_KEY}`
-      }
-    });
-    const eggJson = await eggRes.json();
-    if(!eggRes.ok) throw eggJson;
-    const startup_cmd = eggJson.attributes.startup;
-
-    const srvPayload = {
-      name,
-      description:'Server otomatis',
-      user:userId,
-      egg:EGG_ID,
-      docker_image:'ghcr.io/parkervcp/yolks:nodejs_18',
-      startup:startup_cmd,
-      environment:{
-        INST:'npm',
-        USER_UPLOAD:'0',
-        AUTO_UPDATE:'0',
-        CMD_RUN:'npm start'
-      },
-      limits:{ memory:0, swap:0, disk:0, io:500, cpu:0 },
-      feature_limits:{ databases:5, backups:5, allocations:5 },
-      deploy:{ locations:[LOCATION_ID], dedicated_ip:false, port_range:[] }
-    };
-
-    const srvRes = await fetch(`${PANEL_URL}/api/application/servers`,{
-      method:'POST',
-      headers:{
-        'Accept':'application/json',
-        'Content-Type':'application/json',
-        'Authorization':`Bearer ${API_KEY}`
-      },
-      body:JSON.stringify(srvPayload)
-    });
-    const srvJson = await srvRes.json();
-    if(!srvRes.ok) throw srvJson;
-
-    output.textContent = `✅ Berhasil Membuat Server!\n\nUsername : ${username}\nPassword : ${password}\nLogin    : ${PANEL_URL}\n\nDetail server (JSON):\n` + JSON.stringify(srvJson, null, 2);
-
-  }catch(err){
+    output.textContent = `✅ Server berhasil dibuat!\nUsername: ${json.username}\nPassword: ${json.password}\nPanel: ${json.panel}`;
+  } catch (err) {
     output.textContent = typeof err === 'string' ? err : JSON.stringify(err, null, 2);
-  }finally{
+  } finally {
     submitBtn.disabled = false;
   }
 });
-</script></body>
+</script>
+</body>
 </html>
