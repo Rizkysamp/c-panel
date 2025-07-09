@@ -7,7 +7,7 @@
     :root {
       --bg: #0f1117;
       --panel: #1b1e27;
-      --primary: #ff3b30; /* merah */
+      --primary: #ff3b30;
       --text: #e7ecf3;
       --muted: #94a3b8;
       font-family: "Inter", sans-serif;
@@ -38,16 +38,11 @@
     <pre id="output">&nbsp;</pre>
     <div class="footer">Domain & API key telah ditanam langsung di skrip • Pastikan pajanan publik Anda aman!</div>
   </main><script>
-/***************************
- * *** KONFIGURASI TETAP ***
- ***************************/
-const PANEL_URL   = "https://monzhost.apcb.biz.id"; // Domain panel
-const API_KEY     = "ptla_o8FUMSQDHSxNkNIstvk3WGt56u7xAq4zC20sQRuJ0Mr"; // Application API key
-const NEST_ID     = 5;   // ID Nest (default)
-const EGG_ID      = 15;  // ID Egg Bot WhatsApp
-const LOCATION_ID = 1;   // ID lokasi node server
-
-/***************************/
+const PANEL_URL   = "https://monzhost.apcb.biz.id";
+const API_KEY     = "ptla_o8FUMSQDHSxNkNIstvk3WGt56u7xAq4zC20sQRuJ0Mr";
+const NEST_ID     = 5;
+const EGG_ID      = 15;
+const LOCATION_ID = 1;
 
 const form      = document.getElementById('createForm');
 const output    = document.getElementById('output');
@@ -70,7 +65,6 @@ form.addEventListener('submit', async (e)=>{
   const password = genPassword(username);
 
   try{
-    /* 1. Buat user */
     const userRes = await fetch(`${PANEL_URL}/api/application/users`,{
       method:'POST',
       headers:{
@@ -91,7 +85,6 @@ form.addEventListener('submit', async (e)=>{
     if(!userRes.ok) throw userJson;
     const userId = userJson.attributes.id;
 
-    /* 2. Ambil startup command egg */
     const eggRes = await fetch(`${PANEL_URL}/api/application/nests/${NEST_ID}/eggs/${EGG_ID}`,{
       method:'GET',
       headers:{
@@ -104,7 +97,6 @@ form.addEventListener('submit', async (e)=>{
     if(!eggRes.ok) throw eggJson;
     const startup_cmd = eggJson.attributes.startup;
 
-    /* 3. Buat server */
     const srvPayload = {
       name,
       description:'Server otomatis',
@@ -135,7 +127,6 @@ form.addEventListener('submit', async (e)=>{
     const srvJson = await srvRes.json();
     if(!srvRes.ok) throw srvJson;
 
-    /* ✅ Sukses */
     output.textContent = `✅ Berhasil Membuat Server!\n\nUsername : ${username}\nPassword : ${password}\nLogin    : ${PANEL_URL}\n\nDetail server (JSON):\n` + JSON.stringify(srvJson, null, 2);
 
   }catch(err){
