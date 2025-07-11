@@ -164,33 +164,40 @@
 
     const resultBox = document.getElementById("result");
     resultBox.style.display = "block";
-    resultBox.textContent = "⏳ Membuat server...";
+    resultBox.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Sedang membuat server...`;
 
     try {
       const res = await fetch('/api/create-user', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, ram, disk, cpu, egg })
       });
 
       const json = await res.json();
 
       if (res.ok) {
-        resultBox.textContent = `✅ Server berhasil dibuat!\n
-Panel: ${json.server.panel}
-Username: ${json.user.username}
-Email: ${json.user.email}
-Password: ${json.user.password}
-Server: ${json.server.name}
-RAM: ${json.server.specs.ram}MB | Disk: ${json.server.specs.disk}MB | CPU: ${json.server.specs.cpu}%`;
+        resultBox.innerHTML = `
+          <p><i class="fas fa-check-circle" style="color:#4CAF50;"></i> <strong>Server berhasil dibuat!</strong></p>
+          <p><strong>Panel:</strong> ${json.server.panel}</p>
+          <p><strong>Username:</strong> ${json.user.username}</p>
+          <p><strong>Email:</strong> ${json.user.email}</p>
+          <p><strong>Password:</strong> ${json.user.password}</p>
+          <p><strong>Server:</strong> ${json.server.name}</p>
+          <p><strong>RAM:</strong> ${json.server.specs.ram}MB |
+             <strong>Disk:</strong> ${json.server.specs.disk}MB |
+             <strong>CPU:</strong> ${json.server.specs.cpu}%</p>
+        `;
       } else {
-        resultBox.textContent = `❌ Gagal:\n` + JSON.stringify(json, null, 2);
+        resultBox.innerHTML = `
+          <p><i class="fas fa-times-circle" style="color:#f44336;"></i> <strong>Gagal membuat server:</strong></p>
+          <pre>${JSON.stringify(json, null, 2)}</pre>
+        `;
       }
-
     } catch (err) {
-      resultBox.textContent = `❌ Error jaringan: ${err.message}`;
+      resultBox.innerHTML = `
+        <p><i class="fas fa-exclamation-triangle" style="color:#ff9800;"></i> <strong>Error jaringan:</strong></p>
+        <p>${err.message}</p>
+      `;
     }
   }
 </script>
