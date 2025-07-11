@@ -3,209 +3,184 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Panel WhatsApp Bot</title>
+  <title>Buat Server Bot WA</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
+    * { box-sizing: border-box; }
     body {
       font-family: 'Poppins', sans-serif;
-      background-color: #0f0f12;
-      color: #e0e0e0;
-      padding: 0;
+      background: #0f0f12;
+      color: #eee;
       margin: 0;
+      padding: 0;
     }
-
-    .top-banner {
-      background: #1e1e21;
+    .container {
+      max-width: 95%;
+      width: 600px;
+      margin: 40px auto;
       padding: 20px;
-      text-align: center;
-      font-size: 18px;
-      font-weight: bold;
-      border-bottom: 1px solid #2a2a2a;
+      display: flex;
+      flex-direction: column;
+      gap: 35px;
     }
-
-    .panel {
-      background-color: #1e1e21;
+    .card {
+      background: #1c1c1f;
       border-radius: 14px;
       padding: 25px;
-      max-width: 500px;
-      margin: 40px auto;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); /* Shadow hitam */
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
     }
-
     h1, h2 {
+      font-size: 20px;
       text-align: center;
-      color: #4da8ff;
-      margin-bottom: 20px;
+      color: #fff;
+      margin-bottom: 15px;
     }
-
     label {
-      display: block;
-      margin-top: 15px;
       font-size: 14px;
+      color: #ccc;
+      display: block;
+      margin: 12px 0 6px;
     }
-
     input, select, button {
       width: 100%;
-      padding: 12px;
-      margin-top: 8px;
+      padding: 12px 14px;
+      font-size: 15px;
       margin-bottom: 15px;
       border: none;
       border-radius: 8px;
       background: #2c2c2f;
       color: #fff;
-      font-size: 15px;
     }
-
+    input::placeholder {
+      color: #999;
+    }
     button {
-      background-color: #377dff;
-      font-weight: bold;
+      background: #377dff;
+      font-weight: 600;
       cursor: pointer;
+      transition: 0.3s;
     }
-
     button:hover {
-      background-color: #2f6fe4;
+      background: #2f6fe4;
     }
-
-    #result {
+    .result {
       background: #111;
-      color: #e0e0e0;
-      padding: 15px;
-      border-radius: 10px;
-      margin-top: 20px;
+      color: #0ff;
+      padding: 12px;
+      font-size: 14px;
+      border-radius: 8px;
       display: none;
+      white-space: pre-line;
+    }
+    .info p {
+      margin: 10px 0;
       font-size: 14px;
     }
-
-    i {
-      margin-right: 6px;
-      color: #ffffff;
+    .info i {
+      margin-right: 8px;
+      color: #4da8ff;
+      width: 18px;
+      display: inline-block;
+      text-align: center;
     }
-
-    .info-box {
-      background: #1a1a1d;
-      border-radius: 10px;
-      padding: 15px;
-      margin-top: 20px;
-      line-height: 1.7;
-    }
-
     a {
       color: #4da8ff;
       text-decoration: none;
     }
-
-    .bottom-info {
+    a:hover {
+      text-decoration: underline;
+    }
+    .footer {
       text-align: center;
-      padding: 25px 10px;
-      background: #1e1e21;
-      border-top: 1px solid #2a2a2a;
-      color: #888;
-      font-size: 13px;
+      font-size: 12px;
+      color: #666;
+      margin-top: 40px;
     }
   </style>
 </head>
 <body>
 
-<div class="top-banner">
-  <i class="fas fa-robot"></i> Panel Bot WhatsApp - Otomatis Buat Server
-</div>
+<div class="container">
 
-<div class="panel">
-  <h1><i class="fas fa-server"></i> Buat Server WhatsApp Bot</h1>
+  <!-- Form Buat Server -->
+  <div class="card">
+    <h1><i class="fas fa-server"></i> Buat Server Bot WhatsApp</h1>
 
-  <label for="name"><i class="fas fa-id-badge"></i> Nama Server</label>
-  <input type="text" id="name" placeholder="Nama Server Kamu" required />
+    <label for="name"><i class="fas fa-id-badge"></i> Nama Server</label>
+    <input type="text" id="name" placeholder="bot-wa-ku" />
 
-  <label for="specs"><i class="fas fa-microchip"></i> Pilih Spesifikasi</label>
-  <select id="specs">
-    <option value="1024|1000|50">Hemat - 1GB RAM / 1GB Disk / 50% CPU</option>
-    <option value="2048|2000|100">Standar - 2GB RAM / 2GB Disk / 100% CPU</option>
-    <option value="4096|4000|200">Pro - 4GB RAM / 4GB Disk / 200% CPU</option>
-  </select>
+    <label for="specs"><i class="fas fa-microchip"></i> Spesifikasi</label>
+    <select id="specs">
+      <option value="1024|1000|50">1GB RAM • 1GB Disk • 50% CPU</option>
+      <option value="2048|2000|100">2GB RAM • 2GB Disk • 100% CPU</option>
+      <option value="4096|4000|200">4GB RAM • 4GB Disk • 200% CPU</option>
+    </select>
 
-  <label for="egg"><i class="fas fa-cube"></i> Pilih Egg</label>
-  <select id="egg">
-    <option value="17">Bot WhatsApp (NodeJS)</option>
-  </select>
+    <label for="egg"><i class="fas fa-cube"></i> Pilih Egg</label>
+    <select id="egg">
+      <option value="15">Bot WA (NodeJS)</option>
+    </select>
 
-  <button onclick="buatServer()"><i class="fas fa-rocket"></i> Buat Server</button>
+    <button onclick="buatServer()"><i class="fas fa-rocket"></i> Buat Server</button>
+    <div id="result" class="result"></div>
+  </div>
 
-  <div id="result"></div>
-
-  <div class="info-box">
+  <!-- Info Spek Panel -->
+  <div class="card">
     <h2><i class="fas fa-tools"></i> Spesifikasi Panel</h2>
-    <p>
-      <i class="fas fa-server"></i> VPS: 4 vCPU, 8GB RAM, SSD NVMe<br>
-      <i class="fas fa-map-marker-alt"></i> Lokasi: Singapore & Germany<br>
-      <i class="fas fa-clock"></i> Uptime: 99.99% (Online 24/7)<br>
-      <i class="fas fa-shield-alt"></i> Keamanan: SSL + Cloudflare<br>
-      <i class="fas fa-layer-group"></i> Panel: Pterodactyl v1.11.2
-    </p>
+    <div class="info">
+      <p><i class="fas fa-microchip"></i> 4 vCPU • 8GB RAM • SSD</p>
+      <p><i class="fas fa-map-marker-alt"></i> Lokasi: Singapore & Germany</p>
+      <p><i class="fas fa-shield-alt"></i> Proteksi: Cloudflare + SSL</p>
+      <p><i class="fas fa-clock"></i> Uptime: 99.99% Online</p>
+    </div>
   </div>
 
-  <div class="info-box">
+  <!-- Hubungi Owner -->
+  <div class="card">
     <h2><i class="fas fa-headset"></i> Hubungi Owner</h2>
-    <p>
-      <i class="fab fa-whatsapp"></i> <a href="https://wa.me/6281234567890" target="_blank">+62 812-3456-7890</a><br>
-      <i class="fab fa-telegram"></i> <a href="https://t.me/YourSupportBot" target="_blank">@YourSupportBot</a><br>
-      <i class="fas fa-users"></i> <a href="https://chat.whatsapp.com/xxxxx" target="_blank">Grup Bantuan WhatsApp</a>
-    </p>
+    <div class="info">
+      <p><i class="fab fa-whatsapp"></i> <a href="https://wa.me/6281234567890" target="_blank">WhatsApp</a></p>
+      <p><i class="fab fa-telegram"></i> <a href="https://t.me/YourSupportBot" target="_blank">Telegram</a></p>
+      <p><i class="fas fa-users"></i> <a href="https://chat.whatsapp.com/xxxxxx" target="_blank">Grup WhatsApp</a></p>
+    </div>
   </div>
-</div>
 
-<div class="bottom-info">
-  <i class="fas fa-code"></i> Sahas Panel • Powered by Pterodactyl • 2025
+  <div class="footer">
+    © 2025 • Sahas Panel
+  </div>
+
 </div>
 
 <script>
   async function buatServer() {
     const name = document.getElementById("name").value.trim();
-    const spec = document.getElementById("specs").value.split("|");
+    const [ram, disk, cpu] = document.getElementById("specs").value.split("|");
     const egg = document.getElementById("egg").value;
     const result = document.getElementById("result");
 
     result.style.display = "block";
-    result.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Memproses pembuatan server...';
+    result.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Membuat server...`;
 
-    const data = {
-      name,
-      ram: parseInt(spec[0]),
-      disk: parseInt(spec[1]),
-      cpu: parseInt(spec[2]),
-      egg
-    };
+    const res = await fetch("/api/create-user", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, ram: +ram, disk: +disk, cpu: +cpu, egg })
+    });
 
-    try {
-      const res = await fetch("/api/create-user", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
-      });
+    const json = await res.json();
 
-      const json = await res.json();
-
-      if (!res.ok) {
-        result.innerHTML = `<i class="fas fa-times-circle"></i> Gagal membuat server:<br>${json.error || 'Terjadi error'}<br>${JSON.stringify(json.detail || {}, null, 2)}`;
-        return;
-      }
-
-      result.innerHTML = `
-        <p><i class="fas fa-check-circle"></i> <strong>Server berhasil dibuat!</strong></p><br>
-        <p><i class="fas fa-user-circle"></i> Email: <b>${json.user.email}</b><br>
-        Username: <b>${json.user.username}</b><br>
-        Password: <b>${json.user.password}</b></p><br>
-
-        <p><i class="fas fa-server"></i> Server: <b>${json.server.name}</b><br>
-        RAM: ${json.server.specs.ram} MB<br>
-        Disk: ${json.server.specs.disk} MB<br>
-        CPU: ${json.server.specs.cpu}%</p><br>
-
-        <p><i class="fas fa-globe"></i> <a href="${json.server.panel}" target="_blank">${json.server.panel}</a></p>
-      `;
-    } catch (err) {
-      result.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Terjadi kesalahan:<br>${err.message}`;
+    if (!res.ok) {
+      result.innerHTML = `<i class="fas fa-times-circle"></i> Gagal: ${json.error}`;
+      return;
     }
+
+    result.innerHTML = `
+✅ <b>Server berhasil dibuat!</b>\n
+🔗 Panel: <a href="${json.server.panel}" target="_blank">${json.server.panel}</a>\n
+📧 Email: ${json.user.email}\n👤 Username: ${json.user.username}\n🔑 Password: ${json.user.password}
+    `;
   }
 </script>
 
