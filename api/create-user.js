@@ -7,7 +7,7 @@ const panelUrl = "https://lenzzofficial.serverku.biz.id"; // Ganti dengan domain
 const apikey = "ptla_kKep5NCdEHYv5qaF0ff1i2zg1Bo7VXJLzuaPubwMPzx";
 const username = name.toLowerCase().replace(/[^a-z0-9]/g, ""); const email = ${username}@gmail.com; const password = Math.random().toString(36).slice(-10);
 
-try { // 1. Buat User Baru const userRes = await fetch(${panelUrl}/api/application/users, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': Bearer ${apikey}, 'Accept': 'Application/vnd.pterodactyl.v1+json' }, body: JSON.stringify({ username: username, email: email, first_name: name, last_name: 'User', password: password }) });
+try { const userRes = await fetch(${panelUrl}/api/application/users, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': Bearer ${apikey}, 'Accept': 'Application/vnd.pterodactyl.v1+json' }, body: JSON.stringify({ username: username, email: email, first_name: name, last_name: 'User', password: password }) });
 
 const userData = await userRes.json();
 if (userRes.status !== 201) return res.status(500).json({ error: 'Gagal buat user', detail: userData });
