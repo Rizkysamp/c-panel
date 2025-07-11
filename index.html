@@ -2,102 +2,217 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pembuatan Server Bot WhatsApp</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Create WhatsApp Bot Server</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-    :root {
-      --bg: #0f1117;
-      --panel: #1b1e27;
-      --primary: #ff3b30;
-      --text: #e7ecf3;
-      --muted: #94a3b8;
-      font-family: "Inter", sans-serif;
-    }
     * { box-sizing: border-box; }
     body {
-      margin: 0; padding: 0;
-      background: var(--bg);
-      color: var(--text);
-      display: flex; align-items: center; justify-content: center;
-      min-height: 100vh;
+      font-family: 'Poppins', sans-serif;
+      background-color: #0f0f12;
+      color: #e0e0e0;
+      margin: 0;
+      padding: 20px;
     }
-    .card {
-      background: var(--panel);
-      border-radius: 1rem;
-      box-shadow: 0 0 20px rgba(0,0,0,.45);
-      padding: 2rem 2.5rem;
-      width: 100%; max-width: 560px;
-      animation: fadeIn 0.8s ease forwards;
-      opacity: 0; transform: translateY(40px);
+    .box {
+      background-color: #1e1e21;
+      border-radius: 14px;
+      padding: 20px;
+      margin-bottom: 20px;
     }
-    @keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
-    h1 { margin-top: 0; font-size: 1.6rem; text-align: center; }
-    label { display: block; margin-top: 1.2rem; font-weight: 600; }
-    input {
-      width: 100%; padding: 0.6rem 0.8rem; margin-top: 0.4rem;
-      border: 1px solid var(--muted); border-radius: 0.5rem;
-      background: transparent; color: var(--text);
+    h1, h2 {
+      font-size: 20px;
+      margin-bottom: 10px;
+      color: #ffffff;
     }
-    input::placeholder { color: var(--muted); }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-size: 14px;
+      color: #c0c0c0;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 8px;
+      margin-bottom: 15px;
+      border: none;
+      border-radius: 8px;
+      background: #2c2c2f;
+      color: #fff;
+      font-size: 15px;
+    }
     button {
-      margin-top: 2rem; cursor: pointer; width: 100%;
-      background: var(--primary);
-      color: #fff; border: none; padding: 0.8rem; font-size: 1rem;
-      border-radius: 0.5rem; font-weight: 600;
-      transition: background 0.2s;
+      background-color: #377dff;
+      font-weight: 600;
+      transition: 0.3s;
+      cursor: pointer;
     }
-    button:hover { background: #ff5236; }
-    button:disabled { background: #3b3b3b; cursor: not-allowed; }
+    button:hover {
+      background-color: #2f6fe4;
+    }
     pre {
-      margin-top: 1.5rem; background: #13151c; padding: 1rem;
-      overflow-x: auto; border-radius: 0.5rem; max-height: 320px;
+      background: #141414;
+      color: #00ffe4;
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 13px;
+      white-space: pre-wrap;
     }
-    .footer { margin-top: 1rem; font-size: 0.85rem; color: var(--muted); text-align: center; }
+    a {
+      color: #4da8ff;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .footer {
+      text-align: center;
+      font-size: 13px;
+      color: #777;
+      margin-top: 30px;
+    }
+    .icon-title i {
+      margin-right: 6px;
+      color: #ffffff;
+    }
+    .success-box {
+      background: #141414;
+      padding: 15px;
+      border: 1px solid #2f6fe4;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+    .success-box p {
+      margin: 5px 0;
+      color: #c0f0ff;
+      font-size: 14px;
+    }
   </style>
 </head>
 <body>
-  <main class="card">
-    <h1>Buat Server • Bot WhatsApp (Nest 5 / Egg 15)</h1>
-    <form id="createForm">
-      <label for="username">Username (≥4 karakter)</label>
-      <input id="username" minlength="4" placeholder="contoh: botuser" required />
-      <button id="submitBtn" type="submit">Buat Server Sekarang</button>
-    </form>
-    <pre id="output">&nbsp;</pre>
-    <div class="footer">Powered by Vercel &amp; Pterodactyl • Token disimpan aman di serverless function</div>
-  </main>
+
+<div class="box">
+  <h1 class="icon-title"><i class="fas fa-server"></i> Buat Server Bot WhatsApp</h1>
+
+  <label for="name"><i class="fas fa-id-badge"></i> Nama Server</label>
+  <input type="text" id="name" placeholder="Contoh: bot-wa-ku" required />
+
+  <label for="specs"><i class="fas fa-memory"></i> Pilih Spesifikasi</label>
+  <select id="specs">
+    <option value="1024|1000|50">Hemat - 1GB RAM / 1GB Disk / 50% CPU</option>
+    <option value="2048|2000|100">Standar - 2GB RAM / 2GB Disk / 100% CPU</option>
+    <option value="4096|4000|200">Pro - 4GB RAM / 4GB Disk / 200% CPU</option>
+  </select>
+
+  <label for="egg"><i class="fas fa-cube"></i> Pilih Egg</label>
+  <select id="egg">
+    <option value="15">Bot WhatsApp (NodeJS)</option>
+  </select>
+
+  <button onclick="createServer()"><i class="fas fa-rocket"></i> Buat Server</button>
+  <div id="result" class="success-box" style="display:none;"></div>
+</div>
+
+<div class="box">
+  <h2 class="icon-title"><i class="fas fa-headset"></i> Customer Service</h2>
+  <p>Silakan hubungi jika mengalami kendala:</p>
+  <p><i class="fab fa-whatsapp"></i> <a href="https://wa.me/6281234567890" target="_blank">Owner (WhatsApp)</a></p>
+  <p><i class="fab fa-telegram"></i> <a href="https://t.me/YourSupportBot" target="_blank">Customer Service (Telegram)</a></p>
+  <p><i class="fas fa-users"></i> <a href="https://chat.whatsapp.com/xxxxxxx" target="_blank">Grup WhatsApp</a></p>
+</div>
+
+<div class="box">
+  <h2 class="icon-title"><i class="fas fa-tools"></i> Spesifikasi Panel</h2>
+  <p>
+    <i class="fas fa-microchip"></i> VPS: 4 vCPU, 8GB RAM, SSD<br>
+    <i class="fas fa-globe"></i> Lokasi: Singapore & Germany<br>
+    <i class="fas fa-clock"></i> Uptime: 99.99% (Online 24/7)<br>
+    <i class="fas fa-shield-alt"></i> Proteksi: Cloudflare + SSL<br>
+    <i class="fas fa-terminal"></i> Panel: Pterodactyl v1.11.2
+  </p>
+</div>
+
+<div class="footer">
+  © 2025 • Sahas. All Rights Reserved.
+</div>
 
 <script>
-const form = document.getElementById('createForm');
-const output = document.getElementById('output');
-const submitBtn = document.getElementById('submitBtn');
+  async function createServer() {
+    const name = document.getElementById("name").value.trim();
+    const spec = document.getElementById("specs").value.split("|");
+    const ram = parseInt(spec[0]);
+    const disk = parseInt(spec[1]);
+    const cpu = parseInt(spec[2]);
+    const egg = document.getElementById("egg").value;
 
-form.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const username = document.getElementById('username').value.trim().toLowerCase();
-  if (username.length < 4) {
-    output.textContent = '❌ Username minimal 4 karakter!';
-    return;
+    const apikey = "APIKEY_KAMU"; // Ganti
+    const panel = "https://domainpanelkamu.com"; // Ganti
+
+    const data = {
+      name: name,
+      user: 1,
+      egg: egg,
+      docker_image: "ghcr.io/parkervcp/yolks:nodejs_18",
+      startup: "npm start",
+      environment: {
+        AUTO_UPDATE: "1",
+        START_CMD: "npm start"
+      },
+      limits: {
+        memory: ram,
+        swap: 0,
+        disk: disk,
+        io: 500,
+        cpu: cpu
+      },
+      feature_limits: {
+        databases: 0,
+        allocations: 1,
+        backups: 0
+      },
+      deploy: {
+        locations: [1],
+        dedicated_ip: false,
+        port_range: []
+      },
+      start_on_completion: true
+    };
+
+    const resultBox = document.getElementById("result");
+    resultBox.style.display = "block";
+    resultBox.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Sedang membuat server...`;
+
+    try {
+      const res = await fetch(`${panel}/api/application/servers`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${apikey}`,
+          "Accept": "Application/vnd.pterodactyl.v1+json"
+        },
+        body: JSON.stringify(data)
+      });
+
+      const result = await res.json();
+
+      if (res.status === 201) {
+        resultBox.innerHTML = `
+          <i class="fas fa-check-circle" style="color: #00ff99;"></i> <strong>Server berhasil dibuat!</strong><br><br>
+          <p><i class="fas fa-globe"></i> Panel Login: <a href="${panel}/" target="_blank">${panel}</a></p>
+          <p><i class="fas fa-user"></i> Username: <strong>user_${result.attributes.id}</strong></p>
+          <p><i class="fas fa-lock"></i> Password: <strong>otomatis_dikirim</strong></p>
+          <p><i class="fas fa-microchip"></i> Spek: ${ram / 1024}GB RAM / ${disk / 1000}GB Disk / ${cpu}% CPU</p>
+        `;
+      } else {
+        resultBox.innerHTML = `<i class="fas fa-times-circle" style="color:red;"></i> <strong>Gagal membuat server:</strong><br>${JSON.stringify(result.errors || result, null, 2)}`;
+      }
+    } catch (error) {
+      resultBox.innerHTML = `<i class="fas fa-exclamation-triangle" style="color:orange;"></i> <strong>Terjadi kesalahan:</strong><br>${error.message}`;
+    }
   }
-  output.textContent = '⏳ Memproses…';
-  submitBtn.disabled = true;
-
-  try {
-    const res = await fetch('/api/create-server', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username })
-    });
-    const json = await res.json();
-    if (!res.ok) throw json;
-
-    output.textContent = `✅ Server berhasil dibuat!\nUsername: ${json.username}\nPassword: ${json.password}\nPanel: ${json.panel}`;
-  } catch (err) {
-    output.textContent = typeof err === 'string' ? err : JSON.stringify(err, null, 2);
-  } finally {
-    submitBtn.disabled = false;
-  }
-});
 </script>
+
 </body>
 </html>
