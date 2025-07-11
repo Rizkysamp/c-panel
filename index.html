@@ -154,33 +154,44 @@
 </div>
 
 <script>
-  async function buatServer() {
+  async function createServer() {
     const name = document.getElementById("name").value.trim();
-    const [ram, disk, cpu] = document.getElementById("specs").value.split("|");
+    const spec = document.getElementById("specs").value.split("|");
+    const ram = parseInt(spec[0]);
+    const disk = parseInt(spec[1]);
+    const cpu = parseInt(spec[2]);
     const egg = document.getElementById("egg").value;
-    const result = document.getElementById("result");
 
-    result.style.display = "block";
-    result.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Membuat server...`;
+    const resultBox = document.getElementById("result");
+    resultBox.style.display = "block";
+    resultBox.textContent = "⏳ Membuat server...";
 
-    const res = await fetch("/api/create-user", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, ram: +ram, disk: +disk, cpu: +cpu, egg })
-    });
+    try {
+      const res = await fetch('/api/create-user', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ name, ram, disk, cpu, egg })
+      });
 
-    const json = await res.json();
+      const json = await res.json();
 
-    if (!res.ok) {
-      result.innerHTML = `<i class="fas fa-times-circle"></i> Gagal: ${json.error}`;
-      return;
+      if (res.ok) {
+        resultBox.textContent = `✅ Server berhasil dibuat!\n
+Panel: ${json.server.panel}
+Username: ${json.user.username}
+Email: ${json.user.email}
+Password: ${json.user.password}
+Server: ${json.server.name}
+RAM: ${json.server.specs.ram}MB | Disk: ${json.server.specs.disk}MB | CPU: ${json.server.specs.cpu}%`;
+      } else {
+        resultBox.textContent = `❌ Gagal:\n` + JSON.stringify(json, null, 2);
+      }
+
+    } catch (err) {
+      resultBox.textContent = `❌ Error jaringan: ${err.message}`;
     }
-
-    result.innerHTML = `
-✅ <b>Server berhasil dibuat!</b>\n
-🔗 Panel: <a href="${json.server.panel}" target="_blank">${json.server.panel}</a>\n
-📧 Email: ${json.user.email}\n👤 Username: ${json.user.username}\n🔑 Password: ${json.user.password}
-    `;
   }
 </script>
 
