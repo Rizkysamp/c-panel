@@ -66,7 +66,7 @@
     }
     .result {
       background: #111;
-      color: #0ff;
+      color: #fff;
       padding: 12px;
       font-size: 14px;
       border-radius: 8px;
@@ -177,7 +177,7 @@
 
       if (res.ok) {
         resultBox.innerHTML = `
-          <p><i class="fas fa-check-circle" style="color:#4CAF50;"></i> <strong>Server berhasil dibuat!</strong></p>
+          <p><i class="fas fa-check-circle" style="color:#fff;"></i> <strong>Server berhasil dibuat!</strong></p>
           <p><strong>Panel:</strong> ${json.server.panel}</p>
           <p><strong>Username:</strong> ${json.user.username}</p>
           <p><strong>Email:</strong> ${json.user.email}</p>
@@ -189,13 +189,13 @@
         `;
       } else {
         resultBox.innerHTML = `
-          <p><i class="fas fa-times-circle" style="color:#f44336;"></i> <strong>Gagal membuat server:</strong></p>
+          <p><i class="fas fa-times-circle" style="color:#fff;"></i> <strong>Gagal membuat server:</strong></p>
           <pre>${JSON.stringify(json, null, 2)}</pre>
         `;
       }
     } catch (err) {
       resultBox.innerHTML = `
-        <p><i class="fas fa-exclamation-triangle" style="color:#ff9800;"></i> <strong>Error jaringan:</strong></p>
+        <p><i class="fas fa-exclamation-triangle" style="color:#fff;"></i> <strong>Error jaringan:</strong></p>
         <p>${err.message}</p>
       `;
     }
