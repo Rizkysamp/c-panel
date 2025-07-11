@@ -3,138 +3,142 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Buat Server WhatsApp Bot</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <title>Create WhatsApp Bot Server</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     body {
-      background: #0f0f12;
-      color: #e0e0e0;
       font-family: 'Poppins', sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 40px;
+      background-color: #0f0f12;
+      color: #e0e0e0;
+      padding: 20px;
     }
-    .card {
-      background: #1a1a1d;
-      padding: 30px;
-      border-radius: 12px;
-      width: 100%;
+    .box {
+      background-color: #1e1e21;
+      border-radius: 14px;
+      padding: 20px;
       max-width: 500px;
+      margin: 30px auto;
     }
     h1 {
       font-size: 20px;
-      color: #4da8ff;
       margin-bottom: 20px;
+      text-align: center;
+      color: #4da8ff;
     }
-    label, select, input, button {
+    label {
+      margin-top: 15px;
+      font-size: 14px;
+      display: block;
+    }
+    input, select, button {
       width: 100%;
+      padding: 12px;
+      margin-top: 8px;
       margin-bottom: 15px;
-    }
-    input, select {
-      padding: 10px;
       border: none;
       border-radius: 8px;
       background: #2c2c2f;
       color: #fff;
+      font-size: 15px;
     }
     button {
-      padding: 12px;
-      background: #377dff;
-      color: #fff;
-      border: none;
-      border-radius: 8px;
+      background-color: #377dff;
       font-weight: bold;
       cursor: pointer;
     }
-    button:hover { background: #2f6fe4; }
-    #result {
-      background: #121212;
-      color: #0ff;
-      padding: 10px;
-      border-radius: 8px;
-      margin-top: 15px;
+    button:hover {
+      background-color: #2f6fe4;
+    }
+    pre {
+      background: #111;
+      color: #00ffe4;
+      padding: 15px;
+      border-radius: 10px;
       white-space: pre-wrap;
-      display: none;
+      font-size: 13px;
+      margin-top: 20px;
     }
   </style>
 </head>
 <body>
-  <div class="card">
-    <h1><i class="fas fa-robot"></i> Buat Server Bot WhatsApp</h1>
-    <label>Nama Server</label>
-    <input type="text" id="name" placeholder="bot-wa-ku" />
 
-    <label>Spesifikasi</label>
-    <select id="specs">
-      <option value="1024|1000|50">Hemat (1GB / 1GB / 50%)</option>
-      <option value="2048|2000|100">Standar (2GB / 2GB / 100%)</option>
-      <option value="4096|4000|200">Pro (4GB / 4GB / 200%)</option>
-    </select>
+<div class="box">
+  <h1><i class="fas fa-server"></i> Buat Server Bot WhatsApp</h1>
 
-    <button onclick="createServer()">Buat Server</button>
-    <pre id="result"></pre>
-  </div>
+  <label for="name"><i class="fas fa-id-badge"></i> Nama Server</label>
+  <input type="text" id="name" placeholder="Contoh: bot-wa-yoggi" required />
 
-  <script>
-    async function createServer() {
-      const name = document.getElementById("name").value;
-      const [ram, disk, cpu] = document.getElementById("specs").value.split("|");
+  <label for="specs"><i class="fas fa-microchip"></i> Spesifikasi</label>
+  <select id="specs">
+    <option value="1024|1000|50">Hemat (1GB RAM / 1GB Disk / 50% CPU)</option>
+    <option value="2048|2000|100">Standar (2GB RAM / 2GB Disk / 100% CPU)</option>
+    <option value="4096|4000|200">Pro (4GB RAM / 4GB Disk / 200% CPU)</option>
+  </select>
 
-      const data = {
-  name: name,
-  user: userId,
-  egg: 17,
-  nest: 7,
-  docker_image: "ghcr.io/parkervcp/yolks:nodejs_18",
-  startup: "npm start",
-  environment: {
-    CMD_RUN: "npm start",       // ✅ WAJIB SESUAI ERROR
-    AUTO_UPDATE: "1",           // ➕ Tambahan kalau egg kamu butuh
-    START_CMD: "npm start"      // ➕ Tambahan kalau perlu
-  },
-  limits: {
-    memory: ram,
-    swap: 0,
-    disk: disk,
-    io: 500,
-    cpu: cpu
-  },
-  feature_limits: {
-    databases: 0,
-    allocations: 1,
-    backups: 0
-  },
-  deploy: {
-    locations: [1],
-    dedicated_ip: false,
-    port_range: []
-  },
-  start_on_completion: true
-};
+  <label for="egg"><i class="fas fa-cube"></i> Pilih Egg</label>
+  <select id="egg">
+    <option value="17">Bot WhatsApp (NodeJS)</option>
+  </select>
 
-      const result = document.getElementById("result");
-      result.style.display = "block";
-      result.textContent = "⏳ Membuat server...";
+  <button onclick="buatServer()">🚀 Buat Server</button>
 
-      try {
-        const res = await fetch("/api/create-server", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data)
-        });
+  <pre id="result" style="display:none;"></pre>
+</div>
 
-        const json = await res.json();
-        if (res.status === 201) {
-          result.textContent = `✅ Berhasil dibuat!\nPanel: https://domainpanelkamu.com\nUsername: user_${json.attributes.id}\nPassword: dikirim otomatis\nSpesifikasi: ${ram / 1024}GB RAM / ${disk / 1000}GB Disk / ${cpu}% CPU`;
-        } else {
-          result.textContent = "❌ Gagal membuat server:\n" + JSON.stringify(json.errors || json, null, 2);
-        }
-      } catch (e) {
-        result.textContent = "❌ Error:\n" + e.message;
+<script>
+  async function buatServer() {
+    const name = document.getElementById("name").value.trim();
+    const spec = document.getElementById("specs").value.split("|");
+    const egg = document.getElementById("egg").value;
+
+    const data = {
+      name,
+      ram: parseInt(spec[0]),
+      disk: parseInt(spec[1]),
+      cpu: parseInt(spec[2]),
+      egg: egg
+    };
+
+    const result = document.getElementById("result");
+    result.style.display = "block";
+    result.textContent = "⏳ Sedang membuat server dan user...";
+
+    try {
+      const res = await fetch("/api/create-user", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      });
+
+      const json = await res.json();
+
+      if (!res.ok) {
+        result.textContent = "❌ Gagal: " + (json?.error || "Unknown error");
+        if (json.detail) result.textContent += "\n" + JSON.stringify(json.detail, null, 2);
+        return;
       }
+
+      result.textContent = `
+✅ Server berhasil dibuat!
+
+🔐 Akun Panel:
+• Email: ${json.user.email}
+• Username: ${json.user.username}
+• Password: ${json.user.password}
+
+🌐 Panel Login: ${json.server.panel}
+🖥️ Server: ${json.server.name}
+💾 RAM: ${json.server.specs.ram} MB
+💽 Disk: ${json.server.specs.disk} MB
+⚙️ CPU: ${json.server.specs.cpu}%
+      `.trim();
+
+    } catch (err) {
+      result.textContent = "⚠️ Error: " + err.message;
     }
-  </script>
+  }
+</script>
+
 </body>
 </html>
